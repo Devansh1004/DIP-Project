@@ -1,0 +1,8 @@
+numpy
+nibabel
+torch>=2.0
+tqdm
+pandas
+matplotlib
+ipywidgets
+jupyter
