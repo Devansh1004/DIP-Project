@@ -28,10 +28,38 @@ Preprocessing (in `BraTSDataset`):
 
 The notebook also contains an `OptimizedInference` class (FP16, `torch.compile`, batched inference) for fast prediction.
 
+## Results
+
+Trained for 200 epochs on 2x Tesla T4 (about 12 s/epoch), 64x64x64 input volumes.
+Final-epoch metrics on the held-out 20% validation split:
+
+| Metric | Value |
+|---|---|
+| Train loss / Val loss | 0.474 / 0.685 |
+| Train mean Dice | 0.822 |
+| Val mean Dice (classes 1-3) | 0.631 |
+| Val mean IoU | 0.468 |
+| Val Whole Tumor (WT) Dice | 0.762 |
+| Val Tumor Core (TC) Dice | 0.745 |
+| Val Enhancing Tumor (ET) Dice | 0.703 |
+
+### Training / validation loss
+![Loss curve](assets/loss_curve.png)
+
+### Mean Dice and IoU
+![Dice and IoU curve](assets/dice_iou_curve.png)
+
+### Validation Dice per tumor region (WT / TC / ET)
+![WT TC ET Dice](assets/wt_tc_et_dice.png)
+
+Notes: the gap between train and validation Dice shows some overfitting, and the scores are measured on
+downsampled 64^3 volumes, so they are not directly comparable to official full-resolution BraTS numbers.
+
 ## Project structure
 
 ```
 .
+├── assets/             # training plots used in this README
 ├── dip-project.ipynb   # data loading, model, training, evaluation, inference
 ├── requirements.txt
 └── README.md
